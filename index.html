@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Sprint Room — a timed writing sprint on a clean sheet of typing paper, with an analog timer, prompts, live word count and a filing drawer of past sessions.">
+  <title>The Sprint Room — Timed Writing Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="desk-weave" aria-hidden="true"></div>
+  <div class="page">
+    <header class="masthead">
+      <div class="brand-lockup">
+        <div class="brand-seal" aria-hidden="true">
+          <span>TSR</span>
+          <small>Est. 1954</small>
+        </div>
+        <div class="brand-copy">
+          <p class="eyebrow">Writing desk no. 3 · The quiet room</p>
+          <h1>The Sprint Room</h1>
+          <p class="tagline">Set the timer. Take one clean sheet. Keep the pencil moving.</p>
+        </div>
+      </div>
+      <div class="masthead-right">
+        <div class="desk-plate">
+          <span>Typewriter</span>
+          <strong>No. 7</strong>
+        </div>
+        <p class="desk-note">No edits until the bell.</p>
+      </div>
+    </header>
+
+    <main class="desk-grid">
+      <aside class="instrument" aria-label="Sprint timer and controls">
+        <div class="timer-machine">
+          <span class="machine-screw screw-a" aria-hidden="true"></span>
+          <span class="machine-screw screw-b" aria-hidden="true"></span>
+          <div class="instrument-top">
+            <p>Mark IV sprint timer</p>
+            <button type="button" id="muteBtn" class="mute-button" aria-pressed="true">
+              <span class="mute-icon" id="muteIcon" aria-hidden="true">♪</span>
+              <span id="muteLabel">Sound on</span>
+            </button>
+          </div>
+
+          <div class="timer-dial">
+            <svg id="timerDial" viewBox="0 0 240 240" role="img" aria-label="Analog timer dial showing sprint progress">
+              <circle cx="120" cy="120" r="118" fill="#eadfc4" stroke="#0f231b" stroke-width="2"/>
+              <circle cx="120" cy="120" r="109" fill="#f4ead3" stroke="#7f8f79" stroke-width="1"/>
+              <circle cx="120" cy="120" r="99" fill="#f8f0dd" stroke="#a7af95" stroke-width=".7"/>
+              <circle id="timerRing" cx="120" cy="120" r="112" pathLength="100" fill="none" stroke="#a53b30" stroke-width="5" stroke-linecap="round"/>
+              <g id="timerTicks"></g>
+              <g id="timerLabels"></g>
+              <text x="120" y="84" class="dial-brand">SPRINT</text>
+              <text x="120" y="97" class="dial-brand dial-brand-small">TIMER</text>
+              <text x="120" y="168" class="dial-unit">PROGRESS</text>
+              <line id="timerHand" x1="120" y1="120" x2="120" y2="42" class="timer-hand"/>
+              <circle cx="120" cy="120" r="8" fill="#263d32" stroke="#e7dcc2" stroke-width="2"/>
+              <circle cx="120" cy="120" r="2.5" fill="#e7dcc2"/>
+            </svg>
+          </div>
+
+          <div class="timer-plate">
+            <span id="timerState">Ready</span>
+            <time id="timerDisplay" role="timer" aria-live="off" datetime="PT15M">15:00</time>
+          </div>
+
+          <div class="duration-select">
+            <span class="control-label" id="durationLabel">Session length</span>
+            <div class="type-keys" role="group" aria-labelledby="durationLabel">
+              <button type="button" class="type-key" data-minutes="5" aria-pressed="false"><span class="key-number">5</span><span class="key-unit">min</span></button>
+              <button type="button" class="type-key" data-minutes="10" aria-pressed="false"><span class="key-number">10</span><span class="key-unit">min</span></button>
+              <button type="button" class="type-key is-selected" data-minutes="15" aria-pressed="true"><span class="key-number">15</span><span class="key-unit">min</span></button>
+              <button type="button" class="type-key" data-minutes="25" aria-pressed="false"><span class="key-number">25</span><span class="key-unit">min</span></button>
+            </div>
+          </div>
+
+          <div class="timer-controls">
+            <button type="button" id="startBtn" class="start-button">Start sprint</button>
+            <button type="button" id="resetBtn" class="reset-button">Reset</button>
+          </div>
+
+          <button type="button" id="fileBtn" class="file-button" disabled>File this sheet early</button>
+
+          <div class="instrument-foot">
+            <span>On the sheet</span>
+            <strong id="instrumentWords">0 words</strong>
+          </div>
+        </div>
+        <p class="instrument-caption">Mechanical timing · one sheet per sprint · filed by hand</p>
+      </aside>
+
+      <section class="paper-column" aria-labelledby="sheetTitle">
+        <div class="paper-sheet" id="paperSheet">
+          <span class="paper-tape tape-left" aria-hidden="true"></span>
+          <span class="paper-tape tape-right" aria-hidden="true"></span>
+          <header class="sheet-header">
+            <div>
+              <p class="sheet-kicker">The Sprint Room · Session sheet</p>
+              <h2 class="sheet-title" id="sheetTitle">Sprint no. <span id="sheetNumber">001</span></h2>
+            </div>
+            <time id="sheetDate" class="date-stamp">20 OCT 2026</time>
+          </header>
+
+          <div class="prompt-slip">
+            <div class="prompt-head">
+              <span>Today's prompt</span>
+              <button type="button" id="shuffleBtn" class="shuffle-button">
+                <span class="shuffle-mark" aria-hidden="true">↻</span> New prompt
+              </button>
+            </div>
+            <p class="prompt-text" id="promptText" aria-live="polite"></p>
+          </div>
+
+          <label class="writing-label" for="writingArea">Draft</label>
+          <textarea id="writingArea" class="writing-area" spellcheck="true" autocomplete="off" readonly placeholder="The sheet is waiting. Start the timer, then begin anywhere."></textarea>
+
+          <footer class="sheet-report">
+            <div class="report-stats">
+              <div class="report-stat">
+                <span>Words</span>
+                <strong id="wordCount">0</strong>
+              </div>
+              <div class="report-stat">
+                <span>Live wpm</span>
+                <strong id="liveWpm">0</strong>
+              </div>
+              <div class="report-stat">
+                <span>Time left</span>
+                <strong id="paperTimer">15:00</strong>
+              </div>
+              <div class="report-stat">
+                <span>Progress</span>
+                <strong id="progressPercent">0%</strong>
+              </div>
+            </div>
+            <div class="progress-rail" id="progressRail" role="progressbar" aria-label="Sprint progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+            <p class="sheet-fineprint">One side only · drafts are not revised until the bell · keep the sheet</p>
+          </footer>
+
+          <div class="completion-stamp" id="completionStamp" hidden>
+            <span id="stampText">Filed</span>
+            <small id="stampDetail">WORD COUNT</small>
+          </div>
+        </div>
+        <p class="paper-caption">Pencil down when the bell rings. Count every word, even the wrong ones.</p>
+      </section>
+    </main>
+
+    <section class="filing-drawer" aria-labelledby="historyTitle">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">From the filing drawer</p>
+          <h2 id="historyTitle">Past sprint sheets</h2>
+        </div>
+        <div class="drawer-tools">
+          <div class="drawer-totals">
+            <div><span>Sessions</span><strong id="historySessions">0</strong></div>
+            <div><span>Words</span><strong id="historyWords">0</strong></div>
+            <div><span>Best wpm</span><strong id="historyBest">0</strong></div>
+          </div>
+          <button type="button" id="clearHistoryBtn" class="clear-button" disabled>Empty drawer</button>
+        </div>
+      </div>
+      <div class="history-grid" id="historyList"></div>
+      <p class="history-empty" id="historyEmpty">The drawer is empty. Finish a sprint and the sheet will be filed here.</p>
+    </section>
+
+    <footer class="colophon">
+      <span>The Sprint Room · Desk no. 3</span>
+      <span class="colophon-rule" aria-hidden="true"></span>
+      <span>Fifteen minutes is longer than you think.</span>
+    </footer>
+  </div>
+
+  <p class="sr-only" id="announcer" aria-live="polite"></p>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
