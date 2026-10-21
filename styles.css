@@ -1681,3 +1681,21 @@ h1 {
     scroll-behavior: auto !important;
   }
 }
+
+@media print {
+  body * { visibility: hidden; }
+  .paper-sheet, .paper-sheet * { visibility: visible; }
+  .paper-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20mm;
+    background: white;
+    box-shadow: none;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+  }
+  .timer-machine, .filing-drawer, .completion-stamp { display: none; }
+  .desk { border: none; box-shadow: none; }
+}
